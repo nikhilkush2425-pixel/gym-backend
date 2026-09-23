@@ -1,4 +1,26 @@
 const dns = require("dns");
+const net = require("net");
+
+const socket = net.createConnection(
+  {
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    timeout: 10000
+  },
+  () => {
+    console.log("AIVEN TCP TEST: CONNECTED");
+    socket.end();
+  }
+);
+
+socket.on("error", (err) => {
+  console.log("AIVEN TCP TEST ERROR:", err.code, err.message);
+});
+
+socket.on("timeout", () => {
+  console.log("AIVEN TCP TEST: TIMEOUT");
+  socket.destroy();
+});
 
 dns.lookup(
   "mysql-31644d4d-nikhilkush2425-bb6e.h.aivencloud.com",
