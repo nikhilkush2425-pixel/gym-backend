@@ -1,3 +1,12 @@
+const dns = require("dns");
+
+dns.lookup(
+  "mysql-31644d4d-nikhilkush2425-bb6e.h.aivencloud.com",
+  { all: true },
+  (err, addresses) => {
+    console.log("AIVEN DNS TEST:", err || addresses);
+  }
+);
 const express = require("express");
 require("dotenv").config();
 const mysql = require("mysql2/promise");
